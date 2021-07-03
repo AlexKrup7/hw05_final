@@ -65,7 +65,5 @@ class PostCreateFormTests(TestCase):
     def test_image(self):
         for templates, reverse_name in self.url_names.items():
             with self.subTest(reverse_name=reverse_name):
-                response=self.authorized_client.get(reverse_name)
+                response = self.authorized_client.get(reverse_name)
                 self.assertContains(response, '<img')
-
-

@@ -5,9 +5,8 @@
     <main role="main" class="container">
         <div class="row">
             <div class="col-md-3 mb-3 mt-1">
-                {% include 'includes/card.html' %}
+                {% include 'includes/card.html' with following=following %}
             </div>
-
             <div class="col-md-9">
                 {% for post in page %}
                     {% include 'includes/cardpost.html' %}
