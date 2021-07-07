@@ -10,7 +10,7 @@ from .forms import PostForm, CommentForm
 
 @cache_page(20, key_prefix='index_page')
 def index(request):
-    post_list = Post.objects.all()
+    post_list = Post.objects.select_related('group').all()
     paginator = Paginator(post_list, settings.OBJECTS_COUNT)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -108,14 +108,14 @@ def new_post(request):
 def page_not_found(request, exception):
     return render(
         request,
-        "misc/404.html",
-        {"path": request.path},
+        'misc/404.html',
+        {'path': request.path},
         status=404
     )
 
 
 def server_error(request):
-    return render(request, "misc/500.html", status=500)
+    return render(request, 'misc/500.html', status=500)
 
 
 @login_required
@@ -140,7 +140,7 @@ def follow_index(request):
     paginator = Paginator(post_owner, settings.OBJECTS_COUNT)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    return render(request, "posts/follow.html",
+    return render(request, 'posts/follow.html',
                   {'page': page, 'paginator': paginator})
 
 
