@@ -1,16 +1,23 @@
 {% extends "misc/base.html" %}
 {% block title %}Последние обновления на сайте{% endblock %}
-{% block header %}Последние обновления на сайте{% endblock %}
+{% block header %}
+    <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/sSiOlvySbQQ"
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+{% endblock %}
 {% block content %}
-  <div class="container">
+    <div class="container">
+        {% load cache %}
+        {% cache 20 index_page page.number %}
+            {% include "posts/menu.html" with index=True %}
 
-    {% include "posts/menu.html" with index=True %}
+            {% for post in page %}
+                {% include "includes/cardpost.html" with post=post %}
+            {% endfor %}
 
-    {% for post in page %}
-      {% include "includes/cardpost.html" with post=post %}
-    {% endfor %}
-
-    {% include "misc/paginator.html" with items=page paginator=paginator %}
-
-  </div>
+            {% include "misc/paginator.html" with items=page paginator=paginator %}
+        {% endcache %}
+    </div>
 {% endblock %}

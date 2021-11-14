@@ -11,6 +11,8 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "[::1]",
     "testserver",
+    'www.AlexKrupin.pythonanywhere.com',
+    'AlexKrupin.pythonanywhere.com',
 ]
 
 INSTALLED_APPS = [
@@ -24,6 +26,11 @@ INSTALLED_APPS = [
     'users',
     'about',
     'sorl.thumbnail',
+    'rest_framework',
+    'django_filters',
+    'rest_framework.authtoken',
+    'api',
+    #'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -34,6 +41,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #"debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'yatube.urls'
@@ -98,8 +106,11 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATIC_ROOT = ''
+
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+STATICFILES_DIRS = ( os.path.join('static'), )
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -110,4 +121,17 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
+}
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
 }
