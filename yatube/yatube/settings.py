@@ -4,16 +4,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'p5t03kzv7q!ja!tko90$pc^j5r!1y0!5%vion8kgo^6olm4aa@'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "[::1]",
-    "testserver",
-    'www.AlexKrupin.pythonanywhere.com',
-    'AlexKrupin.pythonanywhere.com',
+ALLOWED_HOSTS = ['51.250.20.100', 'localhost', 'axelsocial.ru', 'www.axelsocial.ru'
 ]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
