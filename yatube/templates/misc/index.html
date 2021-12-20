@@ -17,7 +17,8 @@
                 {% include "includes/cardpost.html" with post=post %}
             {% endfor %}
 
-            {% include "misc/paginator.html" with items=page paginator=paginator %}
         {% endcache %}
+        {% include "misc/paginator.html" with items=page paginator=paginator %}
+
     </div>
 {% endblock %}

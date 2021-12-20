@@ -174,18 +174,20 @@ class TestCacheIndex(TestCase):
         cls.group = Group.objects.create(title='TestGroup',
                                          slug='test_slug',
                                          description='Test description')
+        cls.post = Post.objects.create(author=cls.user, group=cls.group,
+                                       text='text')
 
     def test_cache_index(self):
-        """Тест кэша"""
-        cache.clear()
-        Post.objects.create(
-            text='test text',
-            author=self.user
-        )
-        self.authorized_user.get(reverse('index'))
+        """Проверка что страница индекса работает с 20 секундным кешем..........
+        """
         response = self.authorized_user.get(reverse('index'))
-        self.assertEqual(response.context, None)
+        Post.objects.create(author=self.user, text='test cache text',
+                            group=self.group)
+        response1 = self.authorized_user.get(reverse('index'))
+        self.assertEqual(response.content, response1.content)
         cache.clear()
-        response = self.authorized_user.get(reverse('index'))
-        self.assertNotEqual(response.context, None)
-        self.assertEqual(response.context['page'][0].text, 'test text')
+        response3 = self.authorized_user.get(reverse('index'))
+        self.assertNotEqual(response3.content, response1.content)
+        self.assertEqual(response3.context['page'][0].text,
+                         'test cache text')
+        self.assertEqual(len(response3.context['page'].object_list), 2)
